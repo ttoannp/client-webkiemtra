@@ -20,11 +20,14 @@ body {
   color: var(--foreground);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   min-height: 100vh;
+  /* 👇 THÊM DÒNG NÀY: Ngăn chặn cuộn ngang tuyệt đối */
+  overflow-x: hidden;
+  width: 100%;
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 6px; /* Giảm xuống 6px cho đẹp hơn trên màn hình nhỏ */
 }
 
 ::-webkit-scrollbar-track {
@@ -41,23 +44,15 @@ body {
   background: linear-gradient(135deg, #db2777, #9333ea);
 }
 
-/* Animations */
+/* Animations - Giữ nguyên */
 @keyframes bounce-gentle {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-5px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
 }
 
 @keyframes pulse-glow {
-  0%, 100% {
-    box-shadow: 0 0 5px rgba(236, 72, 153, 0.5);
-  }
-  50% {
-    box-shadow: 0 0 20px rgba(236, 72, 153, 0.8);
-  }
+  0%, 100% { box-shadow: 0 0 5px rgba(236, 72, 153, 0.5); }
+  50% { box-shadow: 0 0 20px rgba(236, 72, 153, 0.8); }
 }
 
 .animate-bounce-gentle {

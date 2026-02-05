@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next"; // <-- Thêm Viewport vào đây
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
@@ -18,6 +18,14 @@ export const metadata: Metadata = {
   description: "Hệ thống thi trắc nghiệm và tự luận",
 };
 
+// 👇 THÊM ĐOẠN NÀY: Bắt buộc để điện thoại không bị zoom nhỏ
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false, // Tùy chọn: Chặn người dùng zoom tay (giống app native)
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -28,9 +36,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="min-h-screen bg-slate-50 text-slate-900">
+        {/* Thêm 'w-full overflow-x-hidden' để cắt bỏ phần thừa nếu có */}
+        <div className="min-h-screen w-full overflow-x-hidden bg-slate-50 text-slate-900">
           <Header />
-          <main className="mx-auto max-w-5xl px-4 py-8">{children}</main>
+          {/* Main: Trên mobile padding 4 (16px), trên PC padding 8 (32px) cho thoáng */}
+          <main className="mx-auto w-full max-w-5xl px-4 py-4 md:py-8">
+            {children}
+          </main>
         </div>
       </body>
     </html>
