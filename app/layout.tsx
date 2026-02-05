@@ -1,7 +1,8 @@
-import type { Metadata, Viewport } from "next"; // <-- Thêm Viewport vào đây
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
+import AuthGuard from "./components/AuthGuard"; // 👈 Import người bảo vệ vào đây
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,12 +19,12 @@ export const metadata: Metadata = {
   description: "Hệ thống thi trắc nghiệm và tự luận",
 };
 
-// 👇 THÊM ĐOẠN NÀY: Bắt buộc để điện thoại không bị zoom nhỏ
+// Cấu hình hiển thị chuẩn cho điện thoại
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
-  userScalable: false, // Tùy chọn: Chặn người dùng zoom tay (giống app native)
+  userScalable: false,
 };
 
 export default function RootLayout({
@@ -36,10 +37,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* Thêm 'w-full overflow-x-hidden' để cắt bỏ phần thừa nếu có */}
+        {/* AuthGuard chạy ngầm để kiểm tra đăng nhập */}
+        <AuthGuard />
+
+        {/* Container chính: Ngăn cuộn ngang và set màu nền */}
         <div className="min-h-screen w-full overflow-x-hidden bg-slate-50 text-slate-900">
           <Header />
-          {/* Main: Trên mobile padding 4 (16px), trên PC padding 8 (32px) cho thoáng */}
+          
+          {/* Main Content: Responsive Padding */}
           <main className="mx-auto w-full max-w-5xl px-4 py-4 md:py-8">
             {children}
           </main>
